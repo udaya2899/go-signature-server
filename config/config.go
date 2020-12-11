@@ -15,7 +15,7 @@ type envConfig struct {
 	Port           string `json:"port"`
 	PrivateKeyPath string `json:"private_key_path"`
 	PublicKeyPath  string `json:"public_key_path"`
-	LogFilePath    string `json:"log_file_path"`
+	LogFileName    string `json:"log_file_name"`
 	PublicKey      ed25519.PublicKey
 	PrivateKey     ed25519.PrivateKey
 }

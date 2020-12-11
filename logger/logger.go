@@ -13,7 +13,7 @@ var errorlog *os.File
 var Logger *log.Logger
 
 func init() {
-	errorlog, err := os.OpenFile(config.Env.LogFilePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	errorlog, err := os.OpenFile(config.Env.LogFileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}
