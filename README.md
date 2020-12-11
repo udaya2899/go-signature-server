@@ -1,14 +1,17 @@
 ## Signature Server
 
 ### Introduction
+
 Signature Server is a REST API Server written in Go that stores transaction blobs and sings them using ed25519 key
+
+> NOTE: The public private key are to be provided as pem files in the `./pem/` directory and only the path is to the file is provided via `config.json` since `pem` is the standard for storing, encoding and decoding keys.
 
 ### Setup
 
 * Modify the `config.json` file in the project root as needed. Sample Config:
 ```json
 {
-    "port": ":3001",
+    "port": "3001",
     "private_key_path": "pem/private_key.pem",
     "public_key_path": "pem/public_key.pem",
     "log_file_name": "server.log"
@@ -20,7 +23,7 @@ Signature Server is a REST API Server written in Go that stores transaction blob
 make keygen
 ```
 
-It generates two files `public_key.pem` and `private_key.pem` in `pem/` directory
+It executes `utils/generate.go` and generates two files `public_key.pem` and `private_key.pem` in `pem/` directory
 
 If you have your own pre-generated `ed25519` public and private key-pair, they have to be put inside the `pem/` directory with names `public_key.pem`  and `private_key.pem` respectively. If you choose to name it otherwise or put it in a different filepath (inside the project dir), please change the `private_key_path` and `public_key_path` values on `config.json` to the desired value
 
@@ -41,7 +44,7 @@ The following tools are used here:
 
 ### API Documentation
 
-1. `GET PUBLIC KEY`
+1. `GET PUBLIC KEY`:
 
 Returns `public_key` of the generated server keypair
 
@@ -107,6 +110,16 @@ The results of the `vegeta` load test attack can be found at directory `loadtest
 Results: \
 ![Vegeta Result](./loadtest/results/images/vegeta-plot.png)
 
+To perform a load test again, run:
+```
+make vegeta attack
+```
+> Note: Results are overwritten in the results folder
+>
 ## Go version used
 This project was developed in the following specs: \
 `go version go1.15.2 linux/amd64`
+
+## Future Improvements
+* When storing a transaction, return a monotonically increasing integer as Unique Identifier instead of a UUID
+* Replace standard `logger` with `zap` or `logrus`

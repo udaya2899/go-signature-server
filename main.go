@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"runtime"
 
@@ -14,7 +15,7 @@ func main() {
 	log.Printf("CPU Cores that can be used by the program: %v", maxParallelism())
 
 	ginEngine := handler.New()
-	if err := ginEngine.Run(config.Env.Port); err != nil {
+	if err := ginEngine.Run(fmt.Sprintf(":%s", config.Env.Port)); err != nil {
 		log.Fatalf("Cannot start signature server, Error: %v", err)
 	}
 
