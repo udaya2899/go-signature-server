@@ -1,5 +1,15 @@
 ## Signature Server
 
+- [Signature Server](#signature-server)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+  - [Tools used](#tools-used)
+  - [API Documentation](#api-documentation)
+- [Parallelism](#parallelism)
+- [Go version used](#go-version-used)
+- [Future Improvements](#future-improvements)
+  
+
 ### Introduction
 
 Signature Server is a REST API Server written in Go that stores transaction blobs and sings them using ed25519 key
@@ -40,7 +50,19 @@ The following tools are used here:
    * Fast - Writes can be made upto a speed of 160 MB/s \
     Source - https://dgraph.io/badger
 
-> This project is `vendored` i.e the dependencies are shipped alongside in `vendor` folder
+> This project is `vendored` i.e the dependencies are shipped alongside in `vendor` folder. It also uses `go modules`- [Signature Server](#signature-server)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+  - [Tools used](#tools-used)
+  - [API Documentation](#api-documentation)
+- [Signature Server](#signature-server)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+  - [Tools used](#tools-used)
+  - [API Documentation](#api-documentation)
+- [Parallelism](#parallelism)
+- [Go version used](#go-version-used)
+- [Future Improvements](#future-improvements)
 
 ### API Documentation
 
