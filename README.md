@@ -6,8 +6,9 @@
   - [Tools used](#tools-used)
   - [API Documentation](#api-documentation)
 - [Parallelism](#parallelism)
-- [Go version used](#go-version-used)
+- [Go Version](#go-version)
 - [Future Improvements](#future-improvements)
+- [Answer for part 2](#answer-for-part-2)
   
 
 ### Introduction
@@ -61,8 +62,9 @@ The following tools are used here:
   - [Tools used](#tools-used)
   - [API Documentation](#api-documentation)
 - [Parallelism](#parallelism)
-- [Go version used](#go-version-used)
+- [Go Version](#go-version)
 - [Future Improvements](#future-improvements)
+- [Answer for part 2](#answer-for-part-2)
 
 ### API Documentation
 
@@ -138,10 +140,13 @@ make vegeta attack
 ```
 > Note: Results are overwritten in the results folder
 >
-## Go version used
+## Go Version
 This project was developed in the following specs: \
 `go version go1.15.2 linux/amd64`
 
 ## Future Improvements
 * When storing a transaction, return a monotonically increasing integer as Unique Identifier instead of a UUID
 * Replace standard `logger` with `zap` or `logrus`
+
+## Answer for part 2
+Please find answer for part 2 [here](part2-answer.md)
