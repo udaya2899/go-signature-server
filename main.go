@@ -2,20 +2,30 @@ package main
 
 import (
 	"log"
+	"runtime"
 
 	"challenge.summitto.com/udaya2899/challenge_result/config"
 	"challenge.summitto.com/udaya2899/challenge_result/handler"
-	"challenge.summitto.com/udaya2899/challenge_result/logger"
 )
 
 func main() {
 
-	logger.Logger.Printf("Initializing Signature Server")
+	log.Printf("CPU Cores available in machine: %v\n", runtime.NumCPU())
+	log.Printf("CPU Cores that can be used by the program: %v", maxParallelism())
 
 	ginEngine := handler.New()
 	if err := ginEngine.Run(config.Env.Port); err != nil {
 		log.Fatalf("Cannot start signature server, Error: %v", err)
 	}
 
-	logger.Logger.Printf("Signature Server started... Listening to PORT: %v", config.Env.Port)
+	log.Printf("Signature Server started... Listening to PORT: %v", config.Env.Port)
+}
+
+func maxParallelism() int {
+	maxProcs := runtime.GOMAXPROCS(0)
+	numCPU := runtime.NumCPU()
+	if maxProcs < numCPU {
+		return maxProcs
+	}
+	return numCPU
 }

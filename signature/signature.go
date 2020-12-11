@@ -26,8 +26,9 @@ func NewService(logger *log.Logger) *Service {
 
 // SignedMessage is the struct that is returned after signing
 type SignedMessage struct {
-	Message []byte
-	Sign    []byte
+	Message        []byte
+	MessageContent []string
+	Sign           []byte
 }
 
 // GetPublicKey returns the public key stored from the pem file loaded in config
@@ -57,6 +58,7 @@ func (s Service) PostSignature(transactionIDs []string) (*SignedMessage, error) 
 	}
 
 	var values []byte
+	var msgContent []string
 
 	for _, id := range transactionIDs {
 
@@ -66,6 +68,7 @@ func (s Service) PostSignature(transactionIDs []string) (*SignedMessage, error) 
 		}
 
 		values = append(values, value...)
+		msgContent = append(msgContent, string(value))
 	}
 
 	s.log.Printf("Value obtained from ID: %+v", string(values))
@@ -80,7 +83,8 @@ func (s Service) PostSignature(transactionIDs []string) (*SignedMessage, error) 
 	s.log.Printf("Signed successfully for given transactions")
 
 	return &SignedMessage{
-		Message: values,
-		Sign:    signature,
+		Message:        values,
+		Sign:           signature,
+		MessageContent: msgContent,
 	}, nil
 }

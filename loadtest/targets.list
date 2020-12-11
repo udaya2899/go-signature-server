@@ -1,0 +1,9 @@
+GET http://localhost:3001/public_key
+
+PUT http://localhost:3001/transaction
+Content-Type: application/json
+@loadtest/requests/put_transaction.json
+
+POST http://localhost:3001/signature
+Content-Type: application/json
+@loadtest/requests/post_signature.json

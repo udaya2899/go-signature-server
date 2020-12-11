@@ -22,7 +22,10 @@ make keygen
 
 It generates two files `public_key.pem` and `private_key.pem` in `pem/` directory
 
+If you have your own pre-generated `ed25519` public and private key-pair, they have to be put inside the `pem/` directory with names `public_key.pem`  and `private_key.pem` respectively. If you choose to name it otherwise or put it in a different filepath (inside the project dir), please change the `private_key_path` and `public_key_path` values on `config.json` to the desired value
+
 ### Tools used
+
 The following tools are used here:
 1. REST API Framework - [`gin-gonic/gin`](https://github.com/gin-gonic/gin)
    * High-performance - gin-gonic is a wrapper around `httprouter` and is one of the fastest frameworks
@@ -34,6 +37,7 @@ The following tools are used here:
    * Fast - Writes can be made upto a speed of 160 MB/s \
     Source - https://dgraph.io/badger
 
+> This project is `vendored` i.e the dependencies are shipped alongside in `vendor` folder
 
 ### API Documentation
 
@@ -70,7 +74,39 @@ Returns the unique uuid identifier for the created transaction
 }
 ```
 
-The transaction value is persisted in the system
+The transaction value is persisted in the system using [`badger`](https://github.com/dgraph-io/badger)
 
+3. `POST SIGNATURE`
 
+Accepts a JSON key value pair of the format:
+```json
+{
+    "ids": ["9d09f5ab-82eb-4fa5-b965-54792ea80131", "fc4b56d8-7418-49e2-b969-8567e7221209"]
+}
+```
+which are generated unique identifiers for respective transactions. The persisted values in the DB are evaluated, appended and considered as a message.
 
+This message is signed using the `ed25519` signature algorithm. For safety, the signature is verified on the server before sending it to the client.
+
+After successfully verifying, the server sends a response containing the message that was signed as well as the signature. A sample signed response is as follows:
+```json
+{
+  "message": ["BAUGBwg=","Udaya"],
+  "signature": "XpARy3XLAVuu5o/GqLt3sfseVjT2zNBb/2X+AFzG89Xa5f8ryll2iBlvvZetKI9VonbC+uahFnDWTI7be6k8Bg=="
+}
+```
+
+## Parallelism
+`go` version greater than `1.5` automatically uses all cores of the machine. The number of cores available on the machine as well as the number of cores used is logged to `stdout`
+
+`gin` uses `net/http` internally, which creates a unique go-routine for every request made thereby enabling high parallelism and performance.
+
+The server's ability to serve massive volume of requests has been tested using `vegeta`.
+The results of the `vegeta` load test attack can be found at directory `loadtest/results/html/`
+
+Results: \
+![Vegeta Result](./loadtest/results/images/vegeta-plot.png)
+
+## Go version used
+This project was developed in the following specs: \
+`go version go1.15.2 linux/amd64`

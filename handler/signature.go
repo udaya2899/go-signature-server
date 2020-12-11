@@ -19,7 +19,7 @@ func setSignatureRoutes(router *gin.Engine) {
 func getPublicKey(c *gin.Context) {
 	if config.Env.PublicKey == nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Public Key not found. Something went wrong",
+			"error": "Public Key not found. Something went wrong. Try running 'make keygen' on the server if you have access",
 		})
 		return
 	}
@@ -78,7 +78,7 @@ func postSignature(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message":   string(signedMessage.Message),
+		"message":   signedMessage.MessageContent,
 		"signature": signedMessage.Sign,
 	})
 }
