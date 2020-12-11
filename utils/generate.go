@@ -19,12 +19,17 @@ func generateAndWriteKeyPair() {
 		log.Fatalf("Cannot generate ed25519 keypair, err: %v", err)
 	}
 
+	// Create pem directory if not exists
+	if _, err := os.Stat("pem"); os.IsNotExist(err) {
+		os.Mkdir("pem", os.ModeDir)
+	}
+
 	writePrivateKey(privateKey)
 	writePublicKey(publicKey)
 }
 
 func writePrivateKey(privateKey ed25519.PrivateKey) {
-	pemPrivateFile, err := os.Create("private_key.pem")
+	pemPrivateFile, err := os.Create("pem/private_key.pem")
 	if err != nil {
 		log.Fatalf("Cannot create pem file: %v", err)
 	}
@@ -48,7 +53,7 @@ func writePrivateKey(privateKey ed25519.PrivateKey) {
 }
 
 func writePublicKey(publicKey ed25519.PublicKey) {
-	pemPublicFile, err := os.Create("public_key.pem")
+	pemPublicFile, err := os.Create("pem/public_key.pem")
 	if err != nil {
 		log.Fatalf("Cannot create pem file: %v", err)
 	}

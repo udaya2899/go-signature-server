@@ -1,0 +1,6 @@
+{
+    "port": ":3001",
+    "private_key_path": "pem/private_key.pem",
+    "public_key_path": "pem/public_key.pem",
+    "log_file_name": "server.log"
+}

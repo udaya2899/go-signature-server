@@ -12,3 +12,4 @@ applog: 2020/12/11 13:25:15 signature.go:71: Value obtained from ID: UdayaBAUGBw
 applog: 2020/12/11 13:25:15 signature.go:80: Signed successfully for given transactions
 applog: 2020/12/11 13:25:37 signature.go:71: Value obtained from ID: BAUGBwg=Udaya
 applog: 2020/12/11 13:25:37 signature.go:80: Signed successfully for given transactions
+applog: 2020/12/11 13:35:44 main.go:13: Initializing Signature Server
