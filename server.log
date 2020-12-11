@@ -5,3 +5,10 @@ applog: 2020/12/11 13:15:31 signature.go:80: Signed successfully for given trans
 applog: 2020/12/11 13:17:52 main.go:13: Initializing Signature Server
 applog: 2020/12/11 13:17:56 signature.go:71: Value obtained from ID: [85 100 97 121 97 66 65 85 71 66 119 103 61]
 applog: 2020/12/11 13:17:56 signature.go:80: Signed successfully for given transactions
+applog: 2020/12/11 13:24:40 main.go:13: Initializing Signature Server
+applog: 2020/12/11 13:25:13 signature.go:71: Value obtained from ID: UdayaBAUGBwg=
+applog: 2020/12/11 13:25:13 signature.go:80: Signed successfully for given transactions
+applog: 2020/12/11 13:25:15 signature.go:71: Value obtained from ID: UdayaBAUGBwg=
+applog: 2020/12/11 13:25:15 signature.go:80: Signed successfully for given transactions
+applog: 2020/12/11 13:25:37 signature.go:71: Value obtained from ID: BAUGBwg=Udaya
+applog: 2020/12/11 13:25:37 signature.go:80: Signed successfully for given transactions

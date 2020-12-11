@@ -4,3 +4,8 @@ docker-build:
 docker-run:
 	docker run --publish 3001:3001 --name signature-server --rm signature-server
 	
+go-run:
+	go run main.go
+
+keygen:
+	go run utils/generate.go
