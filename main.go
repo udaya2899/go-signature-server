@@ -5,9 +5,12 @@ import (
 
 	"challenge.summitto.com/udaya2899/challenge_result/config"
 	"challenge.summitto.com/udaya2899/challenge_result/handler"
+	"challenge.summitto.com/udaya2899/challenge_result/logger"
 )
 
 func main() {
+
+	logger.Logger.Printf("Initializing Signature Server")
 
 	ginEngine := handler.New()
 	if err := ginEngine.Run(config.Env.Port); err != nil {

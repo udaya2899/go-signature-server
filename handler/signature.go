@@ -1,14 +1,13 @@
 package handler
 
 import (
-	"crypto/ed25519"
-	"log"
+	"fmt"
 	"net/http"
 
 	"challenge.summitto.com/udaya2899/challenge_result/config"
-	"challenge.summitto.com/udaya2899/challenge_result/db"
+	"challenge.summitto.com/udaya2899/challenge_result/logger"
+	"challenge.summitto.com/udaya2899/challenge_result/signature"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func setSignatureRoutes(router *gin.Engine) {
@@ -18,6 +17,13 @@ func setSignatureRoutes(router *gin.Engine) {
 }
 
 func getPublicKey(c *gin.Context) {
+	if config.Env.PublicKey == nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Public Key not found. Something went wrong",
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"public_key": config.Env.PublicKey,
 	})
@@ -28,27 +34,26 @@ func putTransaction(c *gin.Context) {
 		Txn string `json:"txn" binding:"required"`
 	}
 
-	var id string
-
 	if c.Bind(&transaction) == nil {
-		id = uuid.New().String()
+		signatureService := signature.NewService(logger.Logger)
 
-		err := db.PutTransaction(id, transaction.Txn)
+		id, err := signatureService.PutTransactionBlob(transaction.Txn)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": err.Error(),
+				"error": fmt.Errorf("Cannot save transaction blob, err: %v", err),
 			})
 			return
 		}
-	} else {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Input is not of type transaction",
+
+		c.JSON(http.StatusOK, gin.H{
+			"id": id,
 		})
 		return
+
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"id": id,
+	c.JSON(http.StatusBadRequest, gin.H{
+		"error": "Input is not of type transaction",
 	})
 }
 
@@ -57,35 +62,23 @@ func postSignature(c *gin.Context) {
 		IDs []string `json:"ids" binding:"required"`
 	}
 
-	var values []byte
+	var signedMessage *signature.SignedMessage
 
 	if c.Bind(&transactions) == nil {
-		for _, id := range transactions.IDs {
+		signatureService := signature.NewService(logger.Logger)
+		var err error
 
-			value, err := db.GetTransactionByID(id)
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{
-					"error": err.Error(),
-				})
-				return
-			}
-
-			values = append(values, value...)
+		signedMessage, err = signatureService.PostSignature(transactions.IDs)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": fmt.Sprintf("Cannot sign for given transaction IDs, err: %v", err),
+			})
+			return
 		}
 	}
 
-	log.Printf("Value obtained from ID: %+v", values)
-
-	signed := ed25519.Sign(config.Env.PrivateKey, values)
-
-	if ok := ed25519.Verify(config.Env.PublicKey, values, signed); !ok {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Cannot verify self-signed signature, something wrong",
-		})
-	}
-
 	c.JSON(http.StatusOK, gin.H{
-		"message":   string(values),
-		"signature": signed,
+		"message":   string(signedMessage.Message),
+		"signature": signedMessage.Sign,
 	})
 }
