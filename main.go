@@ -17,5 +17,5 @@ func main() {
 		log.Fatalf("Cannot start signature server, Error: %v", err)
 	}
 
-	log.Printf("Signature Server started... Listening to PORT: %v", config.Env.Port)
+	logger.Logger.Printf("Signature Server started... Listening to PORT: %v", config.Env.Port)
 }

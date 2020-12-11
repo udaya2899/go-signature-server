@@ -33,6 +33,8 @@ The following tools are used here:
    * Resilient to Crashes - since it uses Write Ahead Log
    * Fast - Writes can be made upto a speed of 160 MB/s \
     Source - https://dgraph.io/badger
+
+
 ### API Documentation
 
 1. `GET PUBLIC KEY`
