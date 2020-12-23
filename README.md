@@ -8,7 +8,6 @@
 - [Parallelism](#parallelism)
 - [Go Version](#go-version)
 - [Future Improvements](#future-improvements)
-- [Answer for part 2](#answer-for-part-2)
   
 
 ### Introduction
@@ -51,20 +50,7 @@ The following tools are used here:
    * Fast - Writes can be made upto a speed of 160 MB/s \
     Source - https://dgraph.io/badger
 
-> This project is `vendored` i.e the dependencies are shipped alongside in `vendor` folder. It also uses `go modules`- [Signature Server](#signature-server)
-  - [Introduction](#introduction)
-  - [Setup](#setup)
-  - [Tools used](#tools-used)
-  - [API Documentation](#api-documentation)
-- [Signature Server](#signature-server)
-  - [Introduction](#introduction)
-  - [Setup](#setup)
-  - [Tools used](#tools-used)
-  - [API Documentation](#api-documentation)
-- [Parallelism](#parallelism)
-- [Go Version](#go-version)
-- [Future Improvements](#future-improvements)
-- [Answer for part 2](#answer-for-part-2)
+> This project is `vendored` i.e the dependencies are shipped alongside in `vendor` folder. It also uses `go modules`
 
 ### API Documentation
 
@@ -147,6 +133,3 @@ This project was developed in the following specs: \
 ## Future Improvements
 * When storing a transaction, return a monotonically increasing integer as Unique Identifier instead of a UUID
 * Replace standard `logger` with `zap` or `logrus`
-
-## Answer for part 2
-Please find answer for part 2 [here](part2-answer.md)
